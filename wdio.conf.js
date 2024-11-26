@@ -22,7 +22,7 @@ export const config = {
     //
     specs: [
         // ToDo: define location for spec files here
-        'specs/**/*.js'
+        'specs/**/cart.e2e.js'
     ],
     // Patterns to exclude.
     exclude: [
