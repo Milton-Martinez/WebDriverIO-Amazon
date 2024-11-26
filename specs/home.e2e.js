@@ -6,7 +6,7 @@ describe('Amazon Home Page', () => {
         await expect(browser).toHaveUrl(expect.stringContaining("amazon"));
         await expect(browser).toHaveTitle('Amazon.com. Spend less. Smile more.');
     });
-    it.only('Search Content and Verify Text', async () => {
+    it('Search Content and Verify Text', async () => {
         await browser.url('/');
         const searchInput = await $('#twotabsearchtextbox');
         const searchButton = await $('input[type="submit"]');
@@ -15,5 +15,19 @@ describe('Amazon Home Page', () => {
         await searchInput.addValue('macbook');
         await searchButton.click();
         await expect(expectedSearchText).toHaveText('"macbook"');
+      });
+      it('Auto Suggestion', async () => {
+        await browser.url('/');
+        const searchInput = await $('#twotabsearchtextbox');
+        const suggestionPane = await $('.left-pane-results-container');
+        const firstSearchResult = await suggestionPane.$('div');
+        const expectedSearchText = await $('.dcl-container-inner');
+    
+        await searchInput.click();
+        await expect(suggestionPane).toBeDisplayed();
+        await browser.keys('ArrowDown');
+        // const expectedText = await firstSearchResult.getText();
+        await browser.keys('Enter');
+        await expect(expectedSearchText).toHaveText(expect.stringContaining('The Holiday Shop'));
       });
 });
