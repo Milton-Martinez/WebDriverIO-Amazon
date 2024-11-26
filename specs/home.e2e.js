@@ -6,4 +6,14 @@ describe('Amazon Home Page', () => {
         await expect(browser).toHaveUrl(expect.stringContaining("amazon"));
         await expect(browser).toHaveTitle('Amazon.com. Spend less. Smile more.');
     });
+    it.only('Search Content and Verify Text', async () => {
+        await browser.url('/');
+        const searchInput = await $('#twotabsearchtextbox');
+        const searchButton = await $('input[type="submit"]');
+        const expectedSearchText = await $('.a-color-state.a-text-bold');
+    
+        await searchInput.addValue('macbook');
+        await searchButton.click();
+        await expect(expectedSearchText).toHaveText('"macbook"');
+      });
 });
